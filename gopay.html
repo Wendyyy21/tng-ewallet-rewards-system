@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOpay - Make Payment</title>
+    <meta name="description" content="GOpay - Secure and fast payment platform. Make payments to your favorite merchants instantly." />
+    <meta name="author" content="GOpay" />
+
+    <meta property="og:title" content="GOpay - Make Payment" />
+    <meta property="og:description" content="GOpay - Secure and fast payment platform. Make payments to your favorite merchants instantly." />
+    <meta property="og:type" content="website" />
+
+    <link rel="stylesheet" href="gopay.css" />
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="header-content">
+                <div class="nav-dropdown">
+                    <button class="nav-button" onclick="toggleDropdown()">
+                        <span>GOpay</span>
+                        <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    
+                    <div id="dropdown" class="dropdown-menu">
+                        <button class="dropdown-item" onclick="navigateToGOrewards()">
+                            GOrewards
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="payment-card">
+            <h1 class="payment-title">Make Payment</h1>
+
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label for="amount" class="form-label">Amount:</label>
+                    <div class="amount-input-container">
+                        <span class="currency-prefix">RM</span>
+                        <input
+                            type="text"
+                            id="amount"
+                            class="form-input"
+                            placeholder="0.00"
+                            oninput="handleAmountChange(this)"
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="merchant" class="form-label">Select Merchant</label>
+                    <select id="merchant" class="form-select" onchange="validateForm()">
+                        <option value="">Choose a merchant</option>
+                        <option value="Starbucks">Starbucks</option>
+                        <option value="Shopee">Shopee</option>
+                        <option value="Grab">Grab</option>
+                        <option value="Lazada">Lazada</option>
+                        <option value="McDonald's">McDonald's</option>
+                    </select>
+                </div>
+
+                <div class="pay-button-container">
+                    <button type="button" id="payButton" class="pay-button" onclick="handlePayment()" disabled>
+                        PAY
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function handleAmountChange(input) {
+            let value = input.value.replace(/[^\d.]/g, '');
+            
+            const parts = value.split('.');
+            if (parts.length > 2) {
+                value = parts[0] + '.' + parts.slice(1).join('');
+            }
+            
+            if (parts[1] && parts[1].length > 2) {
+                value = parts[0] + '.' + parts[1].substring(0, 2);
+            }
+            
+            input.value = value;
+            validateForm();
+        }
+
+        function validateForm() {
+            const amount = document.getElementById('amount').value;
+            const merchant = document.getElementById('merchant').value;
+            const payButton = document.getElementById('payButton');
+            
+            const isValid = amount && amount !== '0' && amount !== '0.00' && merchant;
+            payButton.disabled = !isValid;
+        }
+
+        function handlePayment() {
+            const amount = document.getElementById('amount').value;
+            const merchant = document.getElementById('merchant').value;
+            
+            if (!amount || !merchant) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            alert(`Payment of RM ${amount} to ${merchant} processed successfully!`);
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function navigateToGOrewards() {
+            window.location.href = 'gorewards.html';
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdown');
+            const navButton = document.querySelector('.nav-button');
+            
+            if (!navButton.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            validateForm();
+        });
+    </script>
+</body>
+</html>
