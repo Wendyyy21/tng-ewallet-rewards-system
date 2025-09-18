@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOrewards - Earn & Redeem Points</title>
+    <meta name="description" content="GOrewards - Your ultimate rewards and payment platform. Earn points and redeem exclusive vouchers from top merchants." />
+    <meta name="author" content="GOrewards" />
+
+    <meta property="og:title" content="GOrewards - Earn & Redeem Points" />
+    <meta property="og:description" content="GOrewards - Your ultimate rewards and payment platform. Earn points and redeem exclusive vouchers from top merchants." />
+    <meta property="og:type" content="website" />
+
+    <link rel="stylesheet" href="gorewards.css" />
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="header-content">
+                <div class="nav-dropdown">
+                    <button class="nav-button" onclick="toggleDropdown()">
+                        <span>GOrewards</span>
+                        <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    
+                    <div id="dropdown" class="dropdown-menu">
+                        <button class="dropdown-item" onclick="navigateToGOpay()">
+                            GOpay
+                        </button>
+                    </div>
+                </div>
+
+                <div class="user-points">
+                    <span class="points-label">Points:</span>
+                    <span class="points-value">2,037</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-title">
+            <h1 class="title">Rewards Vouchers</h1>
+            <p class="subtitle">Redeem your points for amazing deals and discounts</p>
+        </div>
+
+        <div class="voucher-grid">
+        </div>
+    </main>
+
+    <script>
+        const vouchers = [
+            { id: 1, title: "Starbucks: Redeem RM5 now!", points: 500, image: "assets/starbucks-voucher.jpg" },
+            { id: 2, title: "McDonald's: Free McFlurry", points: 300, image: "assets/mcdonalds-voucher.jpg" },
+            { id: 3, title: "Grab: RM10 ride discount", points: 800, image: "assets/grab-voucher.jpg" },
+            { id: 4, title: "Shopee: 15% off voucher", points: 450, image: "assets/shopping-voucher.jpg" },
+            { id: 5, title: "KFC: Free Original Recipe", points: 600, image: "assets/mcdonalds-voucher.jpg" },
+            { id: 6, title: "Lazada: RM20 shipping voucher", points: 400, image: "assets/shopping-voucher.jpg" },
+            { id: 7, title: "Pizza Hut: Buy 1 Free 1", points: 1200, image: "assets/mcdonalds-voucher.jpg" },
+            { id: 8, title: "Domino's: 50% off medium pizza", points: 700, image: "assets/mcdonalds-voucher.jpg" },
+            { id: 9, title: "7-Eleven: Free Slurpee", points: 250, image: "assets/shopping-voucher.jpg" },
+            { id: 10, title: "Uniqlo: RM25 off RM100", points: 900, image: "assets/shopping-voucher.jpg" },
+            { id: 11, title: "Foodpanda: Free delivery", points: 200, image: "assets/grab-voucher.jpg" },
+            { id: 12, title: "Watsons: 20% off skincare", points: 550, image: "assets/shopping-voucher.jpg" },
+        ];
+
+        function generateVoucherCards() {
+            const grid = document.querySelector('.voucher-grid');
+            
+            vouchers.forEach(voucher => {
+                const card = document.createElement('div');
+                card.className = 'voucher-card';
+                card.innerHTML = `
+                    <div class="voucher-image">
+                        <img src="${voucher.image}" alt="${voucher.title}" />
+                    </div>
+                    <div class="voucher-info">
+                        <h3 class="voucher-title">${voucher.title}</h3>
+                        <p class="voucher-points">${voucher.points.toLocaleString()} points</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function navigateToGOpay() {
+            window.location.href = 'gopay.html';
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdown');
+            const navButton = document.querySelector('.nav-button');
+            
+            if (!navButton.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            generateVoucherCards();
+        });
+    </script>
+</body>
+</html>
