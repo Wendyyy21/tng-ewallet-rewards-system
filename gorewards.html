@@ -35,7 +35,7 @@
 
                 <div class="user-points">
                     <span class="points-label">Points:</span>
-                    <span class="points-value">2,037</span>
+                    <span class="points-value" id="points-value">0</span>
                 </div>
             </div>
         </div>
@@ -52,6 +52,13 @@
     </main>
 
     <script>
+        fetch('includes/gorewards.php')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById('points-value').textContent = data.points;
+            });
+
         const vouchers = [
             { id: 1, title: "Starbucks: Redeem RM5 now!", points: 500, image: "assets/starbucks-voucher.jpg" },
             { id: 2, title: "McDonald's: Free McFlurry", points: 300, image: "assets/mcdonalds-voucher.jpg" },
