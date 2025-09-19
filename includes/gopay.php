@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST") {
     $merchant = $_POST['merchant'] ?? '';
     $affiliated_merchants = ["Starbucks", "Shopee", "Grab"];
     if(in_array($merchant, $affiliated_merchants)){
-        $_SESSION['points'] += $amount * $merchant_multipliers[$merchant];
+        $_SESSION['points'] += floor($amount * $merchant_multipliers[$merchant]);
     } 
 }
 header("Location: ../gopay.html");
