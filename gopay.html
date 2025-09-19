@@ -40,7 +40,7 @@
         <div class="payment-card">
             <h1 class="payment-title">Make Payment</h1>
 
-            <form id="paymentForm" action = "includes/gopay.php" method="post">
+            <form id="paymentForm" onsubmit="handlePayment(event)">
                 <div class="form-group">
                     <label for="amount" class="form-label">Amount:</label>
                     <div class="amount-input-container">
@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="pay-button-container">
-                    <button type="submit" id="payButton" class="pay-button" onclick="handlePayment()" disabled>
+                    <button type="submit" id="payButton" class="pay-button" disabled>
                         PAY
                     </button>
                 </div>
@@ -78,6 +78,7 @@
     </main>
 
     <script>
+        // validate and format user input
         function handleAmountChange(input) {
             let value = input.value.replace(/[^\d.]/g, '');
             
@@ -103,7 +104,8 @@
             payButton.disabled = !isValid;
         }
 
-        function handlePayment() {
+        function handlePayment(event) {
+            event.preventDefault(); 
             const amount = document.getElementById('amount').value;
             const merchant = document.getElementById('merchant').value;
             
@@ -112,7 +114,29 @@
                 return;
             }
             
-            alert(`Payment of RM ${amount} to ${merchant} processed successfully!`);
+            const formData = new FormData();
+            formData.append('amount', amount);
+            formData.append('merchant', merchant);
+            
+            fetch('includes/gopay.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                let message = `Payment of RM ${amount} to ${merchant} processed successfully!`;
+                if (data.points_earned > 0) {
+                    message += `\nYou earned ${data.points_earned} points.`;
+                }
+                alert(message);
+                
+                document.getElementById('paymentForm').reset();
+                validateForm();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Payment failed. Please try again.');
+            });
         }
 
         function toggleDropdown() {
