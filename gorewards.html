@@ -46,9 +46,10 @@
             <h1 class="title">Rewards Vouchers</h1>
             <p class="subtitle">Redeem your points for amazing deals and discounts</p>
         </div>
-
-        <div class="voucher-grid">
-        </div>
+        <form id="voucher-form" action="includes/gorewards.php" method="post">
+            <div class="voucher-grid">
+            </div>
+        </form>
     </main>
 
     <script>
@@ -78,9 +79,12 @@
             const grid = document.querySelector('.voucher-grid');
             
             vouchers.forEach(voucher => {
-                const card = document.createElement('div');
-                card.className = 'voucher-card';
-                card.innerHTML = `
+                const button = document.createElement('button');
+                button.type = "submit";
+                button.name = "voucher_id";
+                button.value = voucher.id;
+                button.className = "voucher-card";
+                button.innerHTML = `
                     <div class="voucher-image">
                         <img src="${voucher.image}" alt="${voucher.title}" />
                     </div>
@@ -89,7 +93,7 @@
                         <p class="voucher-points">${voucher.points.toLocaleString()} points</p>
                     </div>
                 `;
-                grid.appendChild(card);
+                grid.appendChild(button);
             });
         }
 
