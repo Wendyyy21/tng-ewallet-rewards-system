@@ -40,7 +40,7 @@
         <div class="payment-card">
             <h1 class="payment-title">Make Payment</h1>
 
-            <form id="paymentForm">
+            <form id="paymentForm" action = "includes/gopay.php" method="post">
                 <div class="form-group">
                     <label for="amount" class="form-label">Amount:</label>
                     <div class="amount-input-container">
@@ -48,6 +48,7 @@
                         <input
                             type="text"
                             id="amount"
+                            name="amount"
                             class="form-input"
                             placeholder="0.00"
                             oninput="handleAmountChange(this)"
@@ -57,7 +58,7 @@
 
                 <div class="form-group">
                     <label for="merchant" class="form-label">Select Merchant</label>
-                    <select id="merchant" class="form-select" onchange="validateForm()">
+                    <select id="merchant" name="merchant" class="form-select" onchange="validateForm()">
                         <option value="">Choose a merchant</option>
                         <option value="Starbucks">Starbucks</option>
                         <option value="Shopee">Shopee</option>
@@ -68,7 +69,7 @@
                 </div>
 
                 <div class="pay-button-container">
-                    <button type="button" id="payButton" class="pay-button" onclick="handlePayment()" disabled>
+                    <button type="submit" id="payButton" class="pay-button" onclick="handlePayment()" disabled>
                         PAY
                     </button>
                 </div>
